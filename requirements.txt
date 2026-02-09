@@ -1,0 +1,17 @@
+# requirements.txt
+
+# GUI
+PySide6>=6.5.0
+
+# Конфигурация
+PyYAML>=6.0
+
+# Мониторинг файлов (опционально, fallback если недоступен)
+inotify>=0.2.10
+
+# Стандартные библиотеки (уже есть в Python)
+# - sqlite3
+# - hashlib
+# - socket
+# - threading
+# - pathlib

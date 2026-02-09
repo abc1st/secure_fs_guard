@@ -1,0 +1,43 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Виртуальное окружение
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Данные и логи
+storage/
+logs/
+*.db
+*.log
+
+# Временные файлы
+*.tmp
+*.bak
+*.backup
+
+# Конфигурация
+config/system.yaml
+
+# IPC socket
+*.sock
+
+# Тестовые данные
+test_data/
