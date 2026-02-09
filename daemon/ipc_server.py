@@ -6,7 +6,7 @@ import socket
 import threading
 import struct
 from pathlib import Path
-from typing import Callable, Optional, Dict, Any
+from typing import Callable, Optional, Dict, Any, Tuple
 from enum import Enum
 
 class IPCCommand(Enum):
