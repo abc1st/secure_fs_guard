@@ -13,7 +13,7 @@
 
 ## Архитектура
 
-### Демон (root)
+### Служба (root)
 - `config_manager.py` — управление конфигурацией
 - `logger.py` — журналирование событий безопасности
 - `hash_storage.py` — хранилище эталонных хэшей (SQLite)
@@ -26,7 +26,7 @@
 
 ### GUI (пользователь)
 - `gui_main.py` — главное окно
-- `ipc_client.py` — клиент для связи с демоном
+- `ipc_client.py` — клиент для связи с службой
 - `views/main_window.py` — статус системы
 - `views/settings_view.py` — настройки
 - `views/integrity_view.py` — проверка файлов
@@ -43,7 +43,10 @@ pip install -r requirements.txt
 
 ### Установка системы
 ```bash
-# Копирование файлов
+# Запуск установочного скрипта (копирует файлы и настраивает службу)
+sudo bash scripts/install_service.sh
+
+# Копирование файлов (Ручная установка)
 sudo mkdir -p /opt/secure_fs_guard
 sudo cp -r daemon /opt/secure_fs_guard/
 sudo cp -r gui /opt/secure_fs_guard/
@@ -60,7 +63,7 @@ sudo chmod 700 /var/log/secure_fs_guard
 
 ## Использование
 
-### Запуск демона
+### Запуск службы
 ```bash
 # Ручной запуск
 sudo python3 /opt/secure_fs_guard/daemon/main.py
@@ -107,7 +110,7 @@ monitoring:
 
 ## Алгоритм работы
 
-1. Демон запускается под root
+1. Служба запускается под root
 2. Загружается конфигурация и эталонные хэши
 3. Запускается мониторинг файлов (inotify + fallback)
 4. При изменении файла:
@@ -121,7 +124,7 @@ monitoring:
 
 ## Безопасность
 
-- Демон работает только под root
+- Служба работает только под root
 - Хранилище хэшей: права 600
 - IPC socket: доступен для чтения всем пользователям
 - Резервные копии: права 600

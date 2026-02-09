@@ -5,7 +5,7 @@
 Secure FS Guard - Система контроля целостности и доверенного состояния файловой системы
 с активным противодействием несанкционированным изменениям
 
-Главный модуль демона
+Главный модуль службы
 """
 
 import os
@@ -44,7 +44,7 @@ class SecureFSGuard:
     def __init__(self, config_path: str = "/etc/secure_fs_guard/system.yaml"):
         # Проверка root прав
         if os.geteuid() != 0:
-            print("ОШИБКА: Демон должен быть запущен от имени root")
+            print("ОШИБКА: Служба должна быть запущена от имени root")
             sys.exit(1)
         
         print("=" * 60)
@@ -454,7 +454,7 @@ class SecureFSGuard:
         return IPCResponse(success=True, data={'message': 'pong'})
     
     def _ipc_shutdown(self, params: dict) -> IPCResponse:
-        """Остановка демона"""
+        """Остановка службы"""
         self.logger.admin_action("Остановка системы", params.get('admin_user', 'gui'))
         self.shutdown()
         return IPCResponse(success=True, data={'message': 'Система останавливается'})

@@ -33,7 +33,7 @@ class SecureFSGuardGUI(QMainWindow):
     Содержит:
     - Вкладки для разных разделов
     - Статусная строка
-    - Подключение к демону
+    - Подключение к службе
     """
     
     # Сигналы
@@ -42,7 +42,7 @@ class SecureFSGuardGUI(QMainWindow):
     def __init__(self):
         super().__init__()
         
-        # Клиент для связи с демоном
+        # Клиент для связи с службой
         self.daemon_client = DaemonClient()
         
         # Таймер обновления статуса
@@ -52,7 +52,7 @@ class SecureFSGuardGUI(QMainWindow):
         # Инициализация UI
         self.init_ui()
         
-        # Попытка подключения к демону
+        # Попытка подключения к службе
         self.connect_to_daemon()
         
         # Запуск таймера обновления (каждые 2 секунды)
@@ -126,7 +126,7 @@ class SecureFSGuardGUI(QMainWindow):
         return header
     
     def connect_to_daemon(self):
-        """Подключение к демону"""
+        """Подключение к службе"""
         # Отключение если уже подключён
         if self.daemon_client.is_connected:
             self.daemon_client.disconnect()
@@ -135,8 +135,8 @@ class SecureFSGuardGUI(QMainWindow):
         success, message = self.daemon_client.connect()
         
         if success:
-            self.connection_status_changed.emit(True, "Подключено к демону")
-            self.status_bar.showMessage("✓ Подключение к демону установлено", 3000)
+            self.connection_status_changed.emit(True, "Подключено к службе")
+            self.status_bar.showMessage("✓ Подключение к службе установлено", 3000)
             
             # Обновление данных во всех view
             self.refresh_all_views()
@@ -148,8 +148,8 @@ class SecureFSGuardGUI(QMainWindow):
             QMessageBox.warning(
                 self,
                 "Ошибка подключения",
-                f"Не удалось подключиться к демону:\n{message}\n\n"
-                "Убедитесь, что демон запущен:\n"
+                f"Не удалось подключиться к службе:\n{message}\n\n"
+                "Убедитесь, что служба запущена:\n"
                 "sudo systemctl start secure-fs-guard"
             )
     
@@ -167,9 +167,9 @@ class SecureFSGuardGUI(QMainWindow):
         if not self.daemon_client.is_connected:
             return
         
-        # Проверка связи с демоном
+        # Проверка связи со службой
         if not self.daemon_client.ping():
-            self.connection_status_changed.emit(False, "Потеряно соединение с демоном")
+            self.connection_status_changed.emit(False, "Потеряно соединение со службой")
             return
         
         # Обновление текущей активной вкладки
@@ -186,7 +186,7 @@ class SecureFSGuardGUI(QMainWindow):
     
     def closeEvent(self, event):
         """Обработка закрытия окна"""
-        # Отключение от демона
+        # Отключение от службы
         if self.daemon_client.is_connected:
             self.daemon_client.disconnect()
         

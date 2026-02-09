@@ -37,8 +37,8 @@ echo "[2/7] Копирование файлов..."
 # Определение исходной директории
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Копирование демона
-cp -r "$SCRIPT_DIR"/daemon/*.py "$INSTALL_DIR/daemon/" 2>/dev/null || echo "  ⚠ Файлы демона уже существуют"
+# Копирование службы
+cp -r "$SCRIPT_DIR"/daemon/*.py "$INSTALL_DIR/daemon/" 2>/dev/null || echo "  ⚠ Файлы службы уже существуют"
 
 # Копирование GUI
 cp -r "$SCRIPT_DIR"/gui/*.py "$INSTALL_DIR/gui/" 2>/dev/null || echo "  ⚠ Файлы GUI уже существуют"

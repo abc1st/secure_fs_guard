@@ -1,17 +1,17 @@
 #!/bin/bash
 # scripts/start_daemon.sh
-# Ручной запуск демона Secure FS Guard
+# Ручной запуск службы  Secure FS Guard
 
 set -e
 
 echo "======================================"
-echo "Secure FS Guard - Запуск демона"
+echo "Secure FS Guard - Запуск службы "
 echo "======================================"
 echo
 
 # Проверка root прав
 if [ "$EUID" -ne 0 ]; then 
-    echo "❌ Ошибка: Демон должен быть запущен от имени root"
+    echo "❌ Ошибка: Служба должна быть запущена от имени root"
     echo "   Используйте: sudo $0"
     exit 1
 fi
@@ -19,13 +19,13 @@ fi
 # Определение директории скрипта
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Путь к демону
+# Путь к службе
 DAEMON_DIR="$SCRIPT_DIR/daemon"
 CONFIG_FILE="${1:-/etc/secure_fs_guard/system.yaml}"
 
 # Проверка существования файлов
 if [ ! -f "$DAEMON_DIR/main.py" ]; then
-    echo "❌ Ошибка: Файл демона не найден: $DAEMON_DIR/main.py"
+    echo "❌ Ошибка: Файл службы не найден: $DAEMON_DIR/main.py"
     echo "   Убедитесь, что вы запускаете скрипт из корневой директории проекта"
     exit 1
 fi
@@ -54,11 +54,11 @@ fi
 
 echo
 
-# Переход в директорию демона
+# Переход в директорию службы
 cd "$DAEMON_DIR"
 
-# Запуск демона
-echo "Запуск демона..."
+# Запуск службы
+echo "Запуск службы..."
 echo "Для остановки нажмите Ctrl+C"
 echo
 echo "--------------------------------------"

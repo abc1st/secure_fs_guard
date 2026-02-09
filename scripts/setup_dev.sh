@@ -81,7 +81,7 @@ echo "======================================"
 echo
 echo "Для запуска в режиме разработки:"
 echo
-echo "1. Запуск демона:"
+echo "1. Запуск службы:"
 echo "   sudo python3 daemon/main.py --config config/system.yaml"
 echo
 echo "2. Запуск GUI:"

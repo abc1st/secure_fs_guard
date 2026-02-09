@@ -50,7 +50,7 @@ class IPCCommand(Enum):
 
 class DaemonClient:
     """
-    Клиент для связи с демоном
+    Клиент для связи с службой
     
     Используется GUI для отправки команд и получения данных
     """
@@ -59,7 +59,7 @@ class DaemonClient:
     def __init__(self, socket_path: str = "/var/run/secure_fs_guard.sock"):
         """
         Args:
-            socket_path: путь к UNIX socket демона
+            socket_path: путь к UNIX socket службы
         """
         self.socket_path = socket_path
         self.client_socket: Optional[socket.socket] = None
@@ -67,7 +67,7 @@ class DaemonClient:
     
     def connect(self) -> Tuple[bool, str]:
         """
-        Подключение к демону
+        Подключение к службе
         
         Returns:
             (успешность, сообщение)
@@ -83,9 +83,9 @@ class DaemonClient:
             return True, "Подключение установлено"
         
         except FileNotFoundError:
-            return False, f"Демон не запущен (socket не найден: {self.socket_path})"
+            return False, f"Служба не запущена (socket не найден: {self.socket_path})"
         except ConnectionRefusedError:
-            return False, "Демон не отвечает"
+            return False, "Служба не отвечает"
         except socket.timeout:
             return False, "Таймаут подключения"
         except PermissionError:
@@ -94,7 +94,7 @@ class DaemonClient:
             return False, f"Ошибка подключения: {e}"
     
     def disconnect(self):
-        """Отключение от демона"""
+        """Отключение от службы"""
         if self.client_socket:
             try:
                 self.client_socket.close()
@@ -105,7 +105,7 @@ class DaemonClient:
     
     def send_command(self, command: IPCCommand, params: dict = None) -> Tuple[bool, Any, str]:
         """
-        Отправка команды демону
+        Отправка команды службе
         
         Args:
             command: команда
@@ -115,7 +115,7 @@ class DaemonClient:
             (успешность, данные, ошибка)
         """
         if not self.is_connected:
-            return False, None, "Не подключён к демону"
+            return False, None, "Не подключён к службе"
         
         try:
             # Формирование сообщения
@@ -288,12 +288,12 @@ class DaemonClient:
         return self.send_command(IPCCommand.GET_CONFIG)
     
     def ping(self) -> bool:
-        """Проверка связи с демоном"""
+        """Проверка связи со службой"""
         success, data, error = self.send_command(IPCCommand.PING)
         return success
     
     def shutdown_daemon(self, admin_user: str = "gui") -> Tuple[bool, str, str]:
-        """Остановка демона"""
+        """Остановка службы"""
         success, data, error = self.send_command(IPCCommand.SHUTDOWN, {'admin_user': admin_user})
         if success and data:
             return True, data.get('message', ''), ""

@@ -8,15 +8,15 @@ help:
 	@echo "Установка и управление:"
 	@echo "  make install    - Установка системы"
 	@echo "  make uninstall  - Удаление системы"
-	@echo "  make start      - Запуск демона"
-	@echo "  make stop       - Остановка демона"
-	@echo "  make restart    - Перезапуск демона"
+	@echo "  make start      - Запуск службы"
+	@echo "  make stop       - Остановка службы"
+	@echo "  make restart    - Перезапуск службы"
 	@echo "  make status     - Статус сервиса"
 	@echo "  make logs       - Просмотр логов"
 	@echo ""
 	@echo "Разработка:"
 	@echo "  make dev        - Настройка окружения разработки"
-	@echo "  make dev-start  - Запуск демона в dev режиме"
+	@echo "  make dev-start  - Запуск службы в dev режиме"
 	@echo "  make gui        - Запуск GUI"
 	@echo "  make clean      - Очистка временных файлов"
 
@@ -28,15 +28,15 @@ uninstall:
 
 start:
 	@sudo systemctl start secure-fs-guard
-	@echo "✓ Демон запущен"
+	@echo "✓ Служба запущена"
 
 stop:
 	@sudo systemctl stop secure-fs-guard
-	@echo "✓ Демон остановлен"
+	@echo "✓ Служба остановлена"
 
 restart:
 	@sudo systemctl restart secure-fs-guard
-	@echo "✓ Демон перезапущен"
+	@echo "✓ Служба перезапущена"
 
 status:
 	@systemctl status secure-fs-guard
