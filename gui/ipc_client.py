@@ -55,6 +55,7 @@ class DaemonClient:
     Используется GUI для отправки команд и получения данных
     """
     
+    IPCCommand = IPCCommand
     def __init__(self, socket_path: str = "/var/run/secure_fs_guard.sock"):
         """
         Args:
