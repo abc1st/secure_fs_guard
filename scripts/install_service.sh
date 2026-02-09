@@ -109,9 +109,15 @@ fi
 
 # Установка зависимостей
 echo "  Установка зависимостей..."
-pip3 install PyYAML inotify --break-system-packages 2>/dev/null || \
-pip3 install PyYAML inotify || \
-echo "  ⚠ Некоторые зависимости не удалось установить"
+if [ -f "$SCRIPT_DIR/requirements.txt" ]; then
+    pip3 install -r "$SCRIPT_DIR/requirements.txt" --break-system-packages 2>/dev/null || \
+    pip3 install -r "$SCRIPT_DIR/requirements.txt" || \
+    echo "  ⚠ Некоторые зависимости не удалось установить"
+else
+    pip3 install PyYAML inotify --break-system-packages 2>/dev/null || \
+    pip3 install PyYAML inotify || \
+    echo "  ⚠ Некоторые зависимости не удалось установить"
+fi
 
 echo "  ✓ Зависимости проверены"
 
