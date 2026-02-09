@@ -209,6 +209,8 @@ class RecoveryEngine:
             
             restored_count = 0
             
+            backup_size = os.path.getsize(backup_path)
+            
             # Открытие обоих файлов
             with open(backup_path, 'rb') as backup_file, \
                  open(file_path, 'r+b') as target_file:
@@ -230,6 +232,9 @@ class RecoveryEngine:
                     target_file.write(block_data)
                     
                     restored_count += 1
+                    
+                # Удаляем лишние данные, если файл увеличился после изменений
+                target_file.truncate(backup_size)
             
             # Разблокировка
             self._unlock_file(file_path)
